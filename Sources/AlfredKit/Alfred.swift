@@ -44,26 +44,21 @@ public class Alfred {
         let output = ["items": items]
 
         let jsonEncoder = JSONEncoder()
-        do {
 
-            let json = try jsonEncoder.encode(output)
-
-            guard let encodedString = String(data: json, encoding: .utf8) else {
-
-                throw Error.stringEncode
-            }
-
-            print(encodedString)
-
-        } catch let e {
-
-            throw Error.jsonEncode(rawError: e)
+        guard let json = try? jsonEncoder.encode(output) else {
+            throw Error.jsonEncode
         }
+
+        guard let encodedString = String(data: json, encoding: .utf8) else {
+            throw Error.stringEncode
+        }
+
+        print(encodedString)
     }
 
 
     enum Error: Swift.Error {
-        case jsonEncode(rawError: Swift.Error)
+        case jsonEncode
         case stringEncode
     }
 }
