@@ -17,7 +17,7 @@ public class Alfred {
     private let cacheURL: URL
     private let dataURL: URL
 
-    init() {
+    public init() {
 
         // Environment Variables
         currentURL = URL(fileURLWithPath: fileManager.currentDirectoryPath)
@@ -50,13 +50,19 @@ public class Alfred {
     public struct Item {
 
         let id: String
-        let argument: String
         let title: String
-        let subTitle: String
-        let icon: String
-        let isValid: Bool
+        let argument: String = ""
+        let subTitle: String = ""
+        let icon: String = ""
+        let isValid: Bool = true
         let autocomplete: String = ""
         let rType: String = ""
+
+        public init(id: String, title: String) {
+
+            self.id = id
+            self.title = title
+        }
 
         var xml: String {
 
