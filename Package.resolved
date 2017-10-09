@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FileKit",
+        "repositoryURL": "git@github.com:nvzqz/FileKit.git",
+        "state": {
+          "branch": null,
+          "revision": "d2427f3785c33059674d6f163e11ec15abee7511",
+          "version": "4.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

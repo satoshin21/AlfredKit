@@ -2,15 +2,24 @@ import XCTest
 @testable import AlfredKit
 
 class AlfredKitTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(AlfredKit().text, "Hello, World!")
+
+    func testEnvironmentVariables() {
+
+        let alfred = Alfred()
+        XCTAssertTrue(alfred.items.isEmpty)
+
+        let currentDir = alfred.fileManager.currentDirectoryPath
+        XCTAssertFalse(currentDir.isEmpty)
+        print("currentDir: \(currentDir)")
+        let process = ProcessInfo.processInfo
+        print("""
+            ARGUMENTS:
+            \(process.arguments)
+            """)
     }
 
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testEnvironmentVariables", testEnvironmentVariables),
     ]
 }
