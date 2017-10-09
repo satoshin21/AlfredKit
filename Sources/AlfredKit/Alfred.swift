@@ -51,17 +51,19 @@ public class Alfred {
 
         let id: String
         let title: String
-        let argument: String = ""
+        let argument: String
         let subTitle: String = ""
-        let icon: String = ""
+        let icon: String
         let isValid: Bool = true
         let autocomplete: String = ""
         let rType: String = ""
 
-        public init(id: String, title: String) {
+        public init(id: String, title: String, icon: String) {
 
             self.id = id
             self.title = title
+            self.icon = icon
+            self.argument = title
         }
 
         var xml: String {
