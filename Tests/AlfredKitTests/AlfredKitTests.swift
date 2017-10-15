@@ -3,24 +3,27 @@ import XCTest
 
 class AlfredKitTests: XCTestCase {
 
-    func testEnvironmentVariables() {
+    func testEnvironmentVariables() throws {
 
-        let alfred = Alfred()
-        XCTAssertTrue(alfred.items.isEmpty)
-
-        
-        let currentDir = alfred.fileManager.currentDirectoryPath
-        XCTAssertFalse(currentDir.isEmpty)
-        print("currentDir: \(currentDir)")
+        var items = [Alfred.Item]()
+        items.append(.init(title: "Test1"))
 
         let jsonEncoder = JSONEncoder()
-        var items = [Item]()
-        items.append(Item(title: "foo"))
-        items.append(Item(title: "bar", type: .file))
+        let json = try jsonEncoder.encode(["items": items])
+        let string = String(data: json, encoding: .utf8)
+        XCTAssertNotNil(string)
 
-        let encoded = try! jsonEncoder.encode(items)
-        let encodedString = String(data: encoded, encoding: .utf8 )
-        print(encodedString!)
+        let jsonObject = try JSONSerialization.jsonObject(with: json, options: .allowFragments)
+        XCTAssertTrue(jsonObject is [String: Any])
+        let dictionary = jsonObject as? [String: Any]
+        XCTAssertNotNil(dictionary)
+        guard let dict = dictionary else {
+            return
+        }
+
+        let testItems = dict["items"] as? [Any]
+        XCTAssertNotNil(testItems)
+        XCTAssertTrue(testItems!.count == items.count)
     }
 
     static var allTests = [

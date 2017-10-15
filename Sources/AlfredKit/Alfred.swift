@@ -8,40 +8,12 @@
 import Foundation
 
 
-public class Alfred {
+public extension Array where Element == Alfred.Item {
 
-    let fileManager = FileManager()
+    @discardableResult
+    public func export() throws -> String {
 
-    private(set) var items = [Item]()
-
-    private let currentURL: URL
-    private let cacheURL: URL
-    private let dataURL: URL
-
-    public init() {
-
-        // Environment Variables
-        currentURL = URL(fileURLWithPath: fileManager.currentDirectoryPath)
-        cacheURL = currentURL.appendingPathComponent("cache", isDirectory: true)
-        dataURL = currentURL.appendingPathComponent("data", isDirectory: true)
-
-//        if !fileManager.fileExists(atPath: cacheURL.absoluteString) {
-//            try? fileManager.createDirectory(at: cacheURL, withIntermediateDirectories: true, attributes: nil)
-//        }
-//
-//        if !fileManager.fileExists(atPath: dataURL.absoluteString) {
-//            try? fileManager.createDirectory(at: dataURL, withIntermediateDirectories: true, attributes: nil)
-//        }
-    }
-
-    public func add(item: Item) {
-
-        items.append(item)
-    }
-
-    public func export() throws {
-
-        let output = ["items": items]
+        let output = ["items": self]
 
         let jsonEncoder = JSONEncoder()
 
@@ -54,8 +26,8 @@ public class Alfred {
         }
 
         print(encodedString)
+        return encodedString
     }
-
 
     enum Error: Swift.Error {
         case jsonEncode
